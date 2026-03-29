@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Kelas</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --hitam: #111111;
+        --kuning: #ffe70e;
+        --merah: #ff3232;
+        --putih: #ffffff;
+        --abu: #f4f4f2;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--putih);
+        color: var(--hitam);
+      }
+
+      /* ---- SEMUA PAGE ---- */
+      .page {
+        display: none;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .page.aktif {
+        display: flex;
+      }
+
+      /* ---- TOP NAV (halaman dalam) ---- */
+      .top-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        height: 54px;
+        background: var(--hitam);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .top-nav .brand {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 20px;
+        letter-spacing: 2px;
+        color: var(--kuning);
+        cursor: pointer;
+      }
+      .top-nav .navlinks {
+        display: flex;
+        gap: 3px;
+      }
+      .top-nav .navlinks button {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.55);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+      }
+      .top-nav .navlinks button:hover,
+      .top-nav .navlinks button.on {
+        background: var(--kuning);
+        color: var(--hitam);
+      }
+
+      /* color bar */
+      .colorbar {
+        display: flex;
+        height: 4px;
+      }
+      .colorbar .ch {
+        flex: 1;
+        background: var(--hitam);
+      }
+      .colorbar .ck {
+        flex: 1;
+        background: var(--kuning);
+      }
+      .colorbar .cm {
+        flex: 1;
+        background: var(--merah);
+      }
+
+      /* =============================================
+   PAGE BERANDA — Page 2 layout
+   Logo center + 4 tombol pill vertikal
+   ============================================= */
+      #beranda {
+        align-items: center;
+        justify-content: center;
+        padding: 56px 28px 48px;
+        gap: 0;
+      }
+      #beranda .b-kelas {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: rgba(0, 0, 0, 0.4);
+        margin-bottom: 10px;
+      }
+      #beranda .b-logo {
+        width: 96px;
+        height: 96px;
+        border-radius: 22px;
+        background: var(--hitam);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 48px;
+      }
+      #beranda .b-logo svg {
+        width: 56px;
+        height: 56px;
+      }
+      #beranda .b-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+        max-width: 460px;
+      }
+      .pill-btn {
+        width: 100%;
+        padding: 20px 28px;
+        border: 2.5px solid var(--hitam);
+        border-radius: 100px;
+        background: transparent;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--hitam);
+        cursor: pointer;
+        text-align: center;
+        transition: background 0.18s, color 0.18s, transform 0.12s;
+      }
+      .pill-btn:hover {
+        background: var(--hitam);
+        color: var(--kuning);
+        transform: scale(1.01);
+      }
+
+      /* =============================================
+   PAGE KAMI — Page 3 layout
+   Logo center + 3 alternating row cards
+   ============================================= */
+      .logo-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 16px 18px;
+        gap: 6px;
+      }
+      .logo-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        background: var(--hitam);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo-box svg {
+        width: 36px;
+        height: 36px;
+      }
+      .logo-lbl {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: rgba(0, 0, 0, 0.35);
+        text-transform: uppercase;
+      }
+
+      /* alternating rows */
+      .alt-rows {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .alt-row {
+        display: flex;
+        align-items: stretch;
+        border-top: 1.5px solid #e2e2e2;
+        min-height: 130px;
+      }
+      .alt-row:last-child {
+        border-bottom: 1.5px solid #e2e2e2;
+      }
+      .alt-text {
+        flex: 1;
+        padding: 20px 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .alt-text h3 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      .alt-text p {
+        font-size: 12px;
+        color: #666;
+        line-height: 1.65;
+      }
+      .alt-img {
+        width: 110px;
+        flex-shrink: 0;
+        border: 1.5px solid #ddd;
+        border-radius: 10px;
+        margin: 14px 14px 14px 0;
+        background: var(--abu);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      .alt-row.rev {
+        flex-direction: row-reverse;
+      }
+      .alt-row.rev .alt-img {
+        margin: 14px 0 14px 14px;
+      }
+
+      /* =============================================
+   PAGE GURU — Page 4 layout
+   Logo center + 1 besar + 2 tengah + 1 bawah tengah
+   ============================================= */
+      .img-layout {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+      }
+
+      .img-big {
+        width: 100%;
+        height: 190px;
+        background: var(--abu);
+        border: 1.5px solid #ddd;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .img-big .lbl,
+      .img-med .lbl,
+      .img-sm .lbl {
+        position: absolute;
+        bottom: 10px;
+        left: 12px;
+        background: var(--kuning);
+        color: var(--hitam);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 100px;
+      }
+      .img-row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .img-med {
+        height: 145px;
+        background: var(--abu);
+        border: 1.5px solid #ddd;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .img-center {
+        display: flex;
+        justify-content: center;
+      }
+      .img-sm {
+        width: 58%;
+        height: 145px;
+        background: var(--abu);
+        border: 1.5px solid #ddd;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* =============================================
+   PAGE SISWA — Page 5 layout
+   Org chart berjenjang 1>2>2>4>4
+   ============================================= */
+      .org-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 18px 12px 24px;
+        gap: 0;
+      }
+      .org-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: rgba(0, 0, 0, 0.35);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .org-level {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 0;
+      }
+      .org-line {
+        width: 1.5px;
+        height: 14px;
+        background: #bbb;
+        margin: 0 auto;
+      }
+      .ob {
+        border: 2px solid var(--hitam);
+        border-radius: 8px;
+        padding: 9px 13px;
+        text-align: center;
+        min-width: 78px;
+        background: var(--putih);
+        transition: background 0.14s, color 0.14s;
+        cursor: default;
+      }
+      .ob:hover {
+        background: var(--hitam);
+        color: var(--putih);
+      }
+      .ob h5 {
+        font-size: 10.5px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .ob span {
+        font-size: 9.5px;
+        opacity: 0.6;
+        display: block;
+        margin-top: 1px;
+      }
+      .ob.head {
+        background: var(--hitam);
+        color: var(--putih);
+        min-width: 115px;
+        padding: 11px 16px;
+      }
+      .ob.kuning {
+        background: var(--kuning);
+        border-color: var(--kuning);
+        min-width: 100px;
+      }
+      .ob.merah {
+        background: var(--merah);
+        border-color: var(--merah);
+        color: var(--putih);
+        min-width: 100px;
+      }
+      .ob.sm {
+        min-width: 60px;
+        padding: 7px 9px;
+      }
+      .ob.sm h5 {
+        font-size: 9px;
+      }
+
+      /* =============================================
+   PAGE GALERI — Page 6 layout
+   1 besar rounded + grid 3x3 rounded + 2 pill input
+   ============================================= */
+      .gal-wrap {
+        flex: 1;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .gal-hero {
+        width: 100%;
+        height: 155px;
+        border-radius: 22px;
+        background: var(--kuning);
+        border: 1.5px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .gal-hero-lbl {
+        position: absolute;
+        bottom: 14px;
+        left: 18px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: var(--hitam);
+      }
+
+      .gal-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+      }
+      .gal-cell {
+        aspect-ratio: 1;
+        background: var(--abu);
+        border-radius: 18px;
+        border: 1.5px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.14s, box-shadow 0.14s;
+        overflow: hidden;
+      }
+      .gal-cell:hover {
+        transform: scale(1.04);
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+      }
+      .gal-cell.gk {
+        background: var(--kuning);
+      }
+      .gal-cell.gm {
+        background: var(--merah);
+      }
+      .gal-cell.gh {
+        background: var(--hitam);
+        color: var(--putih);
+      }
+
+      .kontak-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .k-input {
+        width: 100%;
+        padding: 15px 22px;
+        border: 1.5px solid #ccc;
+        border-radius: 100px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 13px;
+        outline: none;
+        background: var(--putih);
+        transition: border-color 0.18s;
+      }
+      .k-input:focus {
+        border-color: var(--hitam);
+      }
+      .k-btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--hitam);
+        color: var(--kuning);
+        border: none;
+        border-radius: 100px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 17px;
+        letter-spacing: 3px;
+        cursor: pointer;
+        transition: background 0.18s;
+      }
+      .k-btn:hover {
+        background: var(--merah);
+        color: var(--putih);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- =============================================
+     BERANDA — halaman 2 layout
+     ============================================= -->
+    <div
+      id="beranda"
+      class="page aktif"
+      style="
+        align-items: center;
+        justify-content: center;
+        padding: 56px 28px 48px;
+        gap: 0;
+      "
+    >
+      <div
+        class="b-kelas"
+        style="
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 13px;
+          letter-spacing: 3px;
+          color: rgba(0, 0, 0, 0.4);
+          margin-bottom: 10px;
+        "
+      >
+        KELAS X — IPA 1
+      </div>
+
+      <div
+        style="
+          width: 96px;
+          height: 96px;
+          border-radius: 22px;
+          background: var(--hitam);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 48px;
+        "
+      >
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="7" y="13" width="24" height="30" rx="3" fill="#FFD55A" />
+          <rect
+            x="19"
+            y="9"
+            width="24"
+            height="30"
+            rx="3"
+            fill="white"
+            stroke="#FFD55A"
+            stroke-width="1.5"
+          />
+          <line
+            x1="25"
+            y1="18"
+            x2="38"
+            y2="18"
+            stroke="#111"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="25"
+            y1="24"
+            x2="38"
+            y2="24"
+            stroke="#111"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="25"
+            y1="30"
+            x2="33"
+            y2="30"
+            stroke="#111"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          width: 100%;
+          max-width: 460px;
+        "
+      >
+        <button class="pill-btn" onclick="goTo('kami')">KAMI</button>
+        <button class="pill-btn" onclick="goTo('guru')">GURU</button>
+        <button class="pill-btn" onclick="goTo('siswa')">SISWA</button>
+        <button class="pill-btn" onclick="goTo('galeri')">
+          GALERI DAN KONTAK
+        </button>
+      </div>
+    </div>
+
+    <!-- =============================================
+     KAMI — halaman 3 layout
+     ============================================= -->
+    <div id="kami" class="page">
+      <div class="colorbar">
+        <span class="ch"></span><span class="ck"></span><span class="cm"></span>
+      </div>
+      <div class="top-nav">
+        <div class="brand" onclick="goTo('beranda')">KELAS X</div>
+        <div class="navlinks">
+          <button class="on" onclick="goTo('kami')">KAMI</button>
+          <button onclick="goTo('guru')">GURU</button>
+          <button onclick="goTo('siswa')">SISWA</button>
+          <button onclick="goTo('galeri')">GALERI</button>
+        </div>
+      </div>
+
+      <div class="logo-center">
+        <div class="logo-box">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect x="4" y="7" width="16" height="22" rx="2" fill="#FFD55A" />
+            <rect
+              x="14"
+              y="4"
+              width="16"
+              height="22"
+              rx="2"
+              fill="white"
+              stroke="#FFD55A"
+              stroke-width="1.2"
+            />
+            <line
+              x1="18"
+              y1="11"
+              x2="26"
+              y2="11"
+              stroke="#111"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <line
+              x1="18"
+              y1="16"
+              x2="26"
+              y2="16"
+              stroke="#111"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <line
+              x1="18"
+              y1="21"
+              x2="23"
+              y2="21"
+              stroke="#111"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <div class="logo-lbl">Logo</div>
+      </div>
+
+      <div class="alt-rows">
+        <div class="alt-row">
+          <div class="alt-text">
+            <h3>Tentang Kelas Kami</h3>
+            <p>
+              Kelas X IPA 1 terdiri dari siswa-siswi berprestasi dengan semangat
+              belajar tinggi dan kebersamaan yang erat.
+            </p>
+          </div>
+          <div class="alt-img">📖</div>
+        </div>
+        <div class="alt-row rev">
+          <div class="alt-img">🌟</div>
+          <div class="alt-text">
+            <h3>Visi & Misi</h3>
+            <p>
+              Menjadi kelas unggul, disiplin, dan kreatif yang berkontribusi
+              positif bagi lingkungan sekolah.
+            </p>
+          </div>
+        </div>
+        <div class="alt-row">
+          <div class="alt-text">
+            <h3>Kegiatan Kelas</h3>
+            <p>
+              Belajar bersama, lomba antar kelas, bakti sosial, hingga kunjungan
+              edukatif yang berkesan.
+            </p>
+          </div>
+          <div class="alt-img">🎯</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+     GURU — halaman 4 layout
+     ============================================= -->
+    <div id="guru" class="page">
+      <div class="colorbar">
+        <span class="ch"></span><span class="ck"></span><span class="cm"></span>
+      </div>
+      <div class="top-nav">
+        <div class="brand" onclick="goTo('beranda')">KELAS X</div>
+        <div class="navlinks">
+          <button onclick="goTo('kami')">KAMI</button>
+          <button class="on" onclick="goTo('guru')">GURU</button>
+          <button onclick="goTo('siswa')">SISWA</button>
+          <button onclick="goTo('galeri')">GALERI</button>
+        </div>
+      </div>
+
+      <div class="logo-center">
+        <div class="logo-box">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="13" r="6" fill="#FFD55A" />
+            <path
+              d="M5 32c0-7.18 5.82-13 13-13s13 5.82 13 13"
+              stroke="white"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              fill="none"
+            />
+          </svg>
+        </div>
+        <div class="logo-lbl">Logo</div>
+      </div>
+
+      <div class="img-layout">
+        <!-- 1 gambar besar -->
+        <div class="img-big">
+          <span>👩‍🏫</span>
+          <div class="lbl">Wali Kelas — Ibu Siti Rahayu</div>
+        </div>
+        <!-- 2 gambar tengah -->
+        <div class="img-row2">
+          <div class="img-med" style="background: #fff9e6">
+            <span>👨‍🏫</span>
+            <div class="lbl">Guru IPA</div>
+          </div>
+          <div class="img-med" style="background: #fff0f0">
+            <span>👩‍🏫</span>
+            <div class="lbl">Guru Matematika</div>
+          </div>
+        </div>
+        <!-- 1 gambar bawah tengah -->
+        <div class="img-center">
+          <div class="img-sm" style="background: #f0f4ff">
+            <span>👨‍🏫</span>
+            <div class="lbl">Guru B.Indonesia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+     SISWA — halaman 5 layout (org chart)
+     ============================================= -->
+    <div id="siswa" class="page">
+      <div class="colorbar">
+        <span class="ch"></span><span class="ck"></span><span class="cm"></span>
+      </div>
+      <div class="top-nav">
+        <div class="brand" onclick="goTo('beranda')">KELAS X</div>
+        <div class="navlinks">
+          <button onclick="goTo('kami')">KAMI</button>
+          <button onclick="goTo('guru')">GURU</button>
+          <button class="on" onclick="goTo('siswa')">SISWA</button>
+          <button onclick="goTo('galeri')">GALERI</button>
+        </div>
+      </div>
+
+      <div class="org-wrap">
+        <div class="org-title">Struktur Organisasi Kelas</div>
+
+        <div class="org-level">
+          <div class="ob head">
+            <h5>Wali Kelas</h5>
+            <span>Ibu Siti Rahayu</span>
+          </div>
+        </div>
+        <div class="org-line"></div>
+
+        <div class="org-level">
+          <div class="ob kuning">
+            <h5>Ketua Kelas</h5>
+            <span>Andi Saputra</span>
+          </div>
+          <div class="ob merah">
+            <h5>Wakil Ketua</h5>
+            <span>Budi Santoso</span>
+          </div>
+        </div>
+        <div class="org-line"></div>
+
+        <div class="org-level">
+          <div class="ob">
+            <h5>Sekretaris I</h5>
+            <span>Citra Dewi</span>
+          </div>
+          <div class="ob">
+            <h5>Sekretaris II</h5>
+            <span>Dian Putri</span>
+          </div>
+        </div>
+        <div class="org-line"></div>
+
+        <div class="org-level">
+          <div class="ob">
+            <h5>Bendahara I</h5>
+            <span>Eka Sari</span>
+          </div>
+          <div class="ob">
+            <h5>Bendahara II</h5>
+            <span>Fara Aulia</span>
+          </div>
+        </div>
+        <div class="org-line"></div>
+
+        <div class="org-level">
+          <div class="ob sm"><h5>Kebersihan</h5></div>
+          <div class="ob sm"><h5>Ketertiban</h5></div>
+          <div class="ob sm"><h5>Humas</h5></div>
+          <div class="ob sm"><h5>Kesenian</h5></div>
+        </div>
+        <div class="org-line"></div>
+
+        <div class="org-level">
+          <div class="ob sm"><h5>Anggota</h5></div>
+          <div class="ob sm"><h5>Anggota</h5></div>
+          <div class="ob sm"><h5>Anggota</h5></div>
+          <div class="ob sm"><h5>Anggota</h5></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+     GALERI — halaman 6 layout
+     1 besar rounded + 3x3 grid + 2 pill input
+     ============================================= -->
+    <div id="galeri" class="page">
+      <div class="colorbar">
+        <span class="ch"></span><span class="ck"></span><span class="cm"></span>
+      </div>
+      <div class="top-nav">
+        <div class="brand" onclick="goTo('beranda')">KELAS X</div>
+        <div class="navlinks">
+          <button onclick="goTo('kami')">KAMI</button>
+          <button onclick="goTo('guru')">GURU</button>
+          <button onclick="goTo('siswa')">SISWA</button>
+          <button class="on" onclick="goTo('galeri')">GALERI</button>
+        </div>
+      </div>
+
+      <div class="gal-wrap">
+        <!-- 1 hero besar rounded -->
+        <div class="gal-hero">
+          <span>📸</span>
+          <div class="gal-hero-lbl">GALERI KELAS X</div>
+        </div>
+
+        <!-- 3x3 grid rounded -->
+        <div class="gal-grid">
+          <div class="gal-cell gk">🏫</div>
+          <div class="gal-cell">🎉</div>
+          <div class="gal-cell gh">🏆</div>
+          <div class="gal-cell">📚</div>
+          <div class="gal-cell gm">⚽</div>
+          <div class="gal-cell">🎨</div>
+          <div class="gal-cell gk">🎭</div>
+          <div class="gal-cell">🌿</div>
+          <div class="gal-cell gh">🎶</div>
+        </div>
+
+        <!-- 2 pill input + kirim -->
+        <div class="kontak-form">
+          <input class="k-input" type="text" placeholder="Nama Lengkap" />
+          <input class="k-input" type="text" placeholder="Pesan / Pertanyaan" />
+          <button
+            class="k-btn"
+            onclick="alert('Pesan terkirim! Terima kasih.')"
+          >
+            KIRIM PESAN
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function goTo(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("aktif"));
+        document.getElementById(id).classList.add("aktif");
+        window.scrollTo(0, 0);
+      }
+    </script>
+  </body>
+</html>
